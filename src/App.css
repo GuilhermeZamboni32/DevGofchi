@@ -1,42 +1,167 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.conteiner {
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+.corpo {
+  max-width: 800px;
+  width: 100%;
+}
+
+.topo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.topo .imagens {
+  background-color: #2d2d2d;
+  padding: 20px;
+  border-radius: 15px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.topo img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.stat-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stat {
+  background-color: #2d2d2d;
+  padding: 15px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.imagens {
+  background-color: #2d434b;
+  padding: 10px;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagens img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.stat-value {
+  flex: 1;
   text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Cores específicas para cada status */
+.vida, .vida-btn { background-color: #ff4444; }
+.fome, .fome-btn { background-color: #4CAF50; }
+.sono, .sono-btn { background-color: #cab226; }
+.sede, .sede-btn { background-color: #37cadd; }
+.banho, .banho-btn { background-color: #5b4dd8; }
+.codigo, .codigo-btn { background-color: #aa66cc; }
+
+.button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.morte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: white;
+}
+
+.img-morte {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+.morte p {
+  color: #ff4444;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .stats-row {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .stat {
+    padding: 10px;
+  }
+
+  .imagens {
+    width: 40px;
+    height: 40px;
+  }
+
+  .imagens img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .button {
+    padding: 10px;
+    font-size: 0.9rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
