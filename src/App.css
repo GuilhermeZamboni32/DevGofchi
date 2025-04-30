@@ -204,13 +204,13 @@
 }
 
 .button-sono { 
-  background-color: var(--azul);
-  box-shadow: 0 4px 6px rgba(55, 202, 221, 0.3);
+  background-color: var(--amarelo);
+  box-shadow: 0 4px 6px rgba(235, 203, 20, 0.3);
 }
 
 .button-sede { 
-  background-color: var(--amarelo);
-  box-shadow: 0 4px 6px rgba(235, 203, 20, 0.3);
+  background-color: var(--azul);
+  box-shadow: 0 4px 6px rgba(55, 202, 221, 0.3);
 }
 
 .button-banho { 
