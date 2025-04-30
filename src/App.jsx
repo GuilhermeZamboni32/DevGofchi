@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [vida, setVida] = useState(10)
+  const [vida, setVida] = useState(100)
   const [vivo, setVivo] = useState(true)
-  const [fome, setFome] = useState(10)
+  const [fome, setFome] = useState(100)
   const [sono, setSono] = useState(100)
-  const [sede, setSede] = useState(10)
+  const [sede, setSede] = useState(100)
   const [banho, setBanho] = useState(100)
   const [codigo, setCodigo] = useState(100)
-  const [exercicio, setExercicio] = useState(10)
+  const [exercicio, setExercicio] = useState(100)
   const [causaMorte, setCausaMorte] = useState('')
   const [imagemDev, setImagemDev] = useState('dev.png')
   const [mostrarReviver, setMostrarReviver] = useState(false)
