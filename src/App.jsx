@@ -2,26 +2,90 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [vida, setVida] = useState(1000)
+  const [vida, setVida] = useState(10)
   const [vivo, setVivo] = useState(true)
-  const [fome, setFome] = useState(100)
+  const [fome, setFome] = useState(10)
   const [sono, setSono] = useState(100)
-  const [sede, setSede] = useState(100)
+  const [sede, setSede] = useState(10)
   const [banho, setBanho] = useState(100)
   const [codigo, setCodigo] = useState(100)
+  const [exercicio, setExercicio] = useState(10)
+  const [causaMorte, setCausaMorte] = useState('')
+  const [imagemDev, setImagemDev] = useState('dev.png')
+  const [mostrarReviver, setMostrarReviver] = useState(false)
+
+  // Efeito para diminuir vida quando fome ou sede estão baixas
+  useEffect(() => {
+    const intervaloPerdaVida = setInterval(() => {
+      if (vivo && (fome < 40 || sede < 40)) {
+        setVida(vidaAtual => {
+          const novaVida = vidaAtual - 5;
+          if (novaVida <= 0) {
+            setVivo(false);
+            return 0;
+          }
+          return novaVida;
+        });
+      }
+    }, 2000);
+    return () => clearInterval(intervaloPerdaVida);
+  }, [vivo, fome, sede]);
+
+  // Efeito para verificar infarto quando exercício está baixo
+  useEffect(() => {
+    const intervaloInfarto = setInterval(() => {
+      if (vivo && exercicio <= 30) {
+        // Gera um número aleatório entre 1 e 10
+        const chance = Math.floor(Math.random() * 10) + 1;
+        if (chance === 1) { // 1 em 10 de chance
+          setVivo(false);
+          setVida(0);
+          setCausaMorte('Seu dev teve um infarto por falta de exercício!');
+        }
+      }
+    }, 5000); // Verifica a cada 5 segundos
+    return () => clearInterval(intervaloInfarto);
+  }, [vivo, exercicio]);
+
+  // Efeito para mudar a imagem baseado no sono , banho e vida 
+  useEffect(() => {
+    if (!vivo) return;
+
+    if (sono <= 30) {
+      setImagemDev('insonia.png');
+    } else if (banho <= 30) {
+      setImagemDev('sujo.png');
+    }else if (vida <= 0) {
+        setImagemDev('morte.png');
+    } else {
+      setImagemDev('dev.png');
+    }
+  }, [sono, banho, vivo]);
+
+  // Efeito para controlar a exibição do botão de reviver
+  useEffect(() => {
+    if (!vivo && !mostrarReviver) {
+      // Espera 2 segundos antes de mostrar o botão de reviver
+      const timer = setTimeout(() => {
+        setMostrarReviver(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [vivo, mostrarReviver]);
 
   // Intervalo vida
-  useEffect(() => {
-    const intervaloVida = setInterval(() => {
-      if(vida <= 0){
-        setVivo(false)
-        clearInterval(intervaloVida)
-        return 0
-      }
-      setVida((vidaAtual) => vidaAtual-1)
-    }, 5000);
-    return () => clearInterval(intervaloVida)
-  },[vida])
+  //useEffect(() => {
+  // const intervaloVida = setInterval(() => {
+  //   if(vida <= 0){
+  //     setVivo(false)
+  //     clearInterval(intervaloVida)
+  //     return 0
+  //   }
+  //   setVida((vidaAtual) => vidaAtual-1)
+  // }, 5000);
+  // return () => clearInterval(intervaloVida)
+  //},
+
 
   // Intervalo fome
   useEffect(() => {
@@ -33,6 +97,8 @@ function App() {
     return () => clearInterval(intervaloFome)
   },[vivo])
 
+
+
   // Intervalo sono
   useEffect(() => {
     const intervaloSono = setInterval(() => {
@@ -42,6 +108,8 @@ function App() {
     }, 4000);
     return () => clearInterval(intervaloSono)
   },[vivo])
+
+
 
   // Intervalo sede
   useEffect(() => {
@@ -53,6 +121,8 @@ function App() {
     return () => clearInterval(intervaloSede)
   },[vivo])
 
+
+
   // Intervalo banho
   useEffect(() => {
     const intervaloBanho = setInterval(() => {
@@ -63,16 +133,32 @@ function App() {
     return () => clearInterval(intervaloBanho)
   },[vivo])
 
+
+
   // Intervalo codigo
   useEffect(() => {
     const intervaloCodigo = setInterval(() => {
       if(vivo){
         setCodigo((codigoAtual) => codigoAtual > 0 ? codigoAtual-2 : 0)
       }
-    }, 4500);
+    }, 5500);
     return () => clearInterval(intervaloCodigo)
   },[vivo])
 
+
+
+  // Intervalo exercicio
+  useEffect(() => {
+    const intervaloExercicio = setInterval(() => {
+      if(vivo){
+        setExercicio((exercicioAtual) => exercicioAtual > 0 ? exercicioAtual-2 : 0)
+      }
+    }, 5000);
+    return () => clearInterval(intervaloExercicio)
+  },[vivo])
+
+
+  
   function curar(){
     if(vivo && vida < 990){
       setVida(vida + 10)
@@ -109,89 +195,134 @@ function App() {
     }
   }
 
+  function fazerExercicio(){
+    if(vivo && exercicio < 90){
+      setExercicio(exercicio + 10)
+    }
+  }
+
+  // Função para reviver o dev
+  function reviver() {
+    setVivo(true);
+    setVida(100);
+    setFome(100);
+    setSono(100);
+    setSede(100);
+    setBanho(100);
+    setCodigo(100);
+    setExercicio(100);
+    setCausaMorte('');
+    setImagemDev('dev.png');
+    setMostrarReviver(false);
+  }
+
   return (
     <div className='conteiner'>
       <div className='corpo'>
         <div className='topo'>
-          <div className='imagem-dev'>
-            <img src="dev.png" alt="Dev" />
+          <div className={`imagem-dev ${sono <= 30 ? 'sonolento' : ''} ${banho <= 30 ? 'sujo' : ''}`}>
+            <img src={imagemDev} alt="Dev" />
           </div>
         </div>
         
-        {vivo ? (
-          <div className='stats-container'>
-            <div className='stats-row'>
-              <div className='stat-block'>
+        
+          <>
+            <div className='stats-container'>
+              <div className='vida-block'>
                 <div className='stat vida'>
                   <div className='imagens'>
                     <img src="vida.png" alt="Vida" />
                   </div>
                   <div className='stat-value'>Vida: {vida}</div>
                 </div>
-                <button className='button vida-btn' onClick={curar}>Curar</button>
               </div>
 
-              <div className='stat-block'>
-                <div className='stat fome'>
-                  <div className='imagens'>
-                    <img src="comida.png" alt="Fome" />
+              <div className='stats-row'>
+                <div className='stat-block'>
+                  <div className='stat fome'>
+                    <div className='imagens'>
+                      <img src="comida.png" alt="Fome" />
+                    </div>
+                    <div className='stat-value'>Fome: {fome}</div>
                   </div>
-                  <div className='stat-value'>Fome: {fome}</div>
                 </div>
-                <button className='button fome-btn' onClick={comer}>Comer</button>
+
+                <div className='stat-block'>
+                  <div className='stat sede'>
+                    <div className='imagens'>
+                      <img src="cafe.png" alt="Sede" />
+                    </div>
+                    <div className='stat-value'>Sede: {sede}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='stats-row'>
+                <div className='stat-block'>
+                  <div className='stat sono'>
+                    <div className='imagens'>
+                      <img src="dormir.png" alt="Sono" />
+                    </div>
+                    <div className='stat-value'>Sono: {sono}</div>
+                  </div>
+                </div>
+
+                <div className='stat-block'>
+                  <div className='stat banho'>
+                    <div className='imagens'>
+                      <img src="banho.png" alt="Banho" />
+                    </div>
+                    <div className='stat-value'>Banho: {banho}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='stats-row'>
+                <div className='stat-block'>
+                  <div className='stat codigo'>
+                    <div className='imagens'>
+                      <img src="codigo.png" alt="Código" />
+                    </div>
+                    <div className='stat-value'>Código: {codigo}</div>
+                  </div>
+                </div>
+
+                <div className='stat-block'>
+                  <div className='stat exercicio'>
+                    <div className='imagens'>
+                      <img src="exercicio.png" alt="Exercício" />
+                    </div>
+                    <div className='stat-value'>Exercício: {exercicio}</div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className='stats-row'>
-              <div className='stat-block'>
-                <div className='stat sono'>
-                  <div className='imagens'>
-                    <img src="dormir.png" alt="Sono" />
-                  </div>
-                  <div className='stat-value'>Sono: {sono}</div>
+            <div className='buttons-container'>
+              {vivo ? (
+                <>
+                  <button className='button vida-btn' onClick={curar}>Curar</button>
+                  <button className='button fome-btn' onClick={comer}>Comer</button>
+                  <button className='button sono-btn' onClick={dormir}>Dormir</button>
+                  <button className='button sede-btn' onClick={beber}>Beber</button>
+                  <button className='button banho-btn' onClick={tomarBanho}>Banho</button>
+                  <button className='button codigo-btn' onClick={programar}>Programar</button>
+                  <button className='button exercicio-btn' onClick={fazerExercicio}>Exercitar</button>
+                </>
+              ) : (
+                <div className="reviver-container">
+                  {causaMorte && <p className="causa-morte">{causaMorte}</p>}
+                  {mostrarReviver && (
+                    <button className='button reviver-btn' onClick={reviver}>
+                      Reviver Dev
+                      <span className="reviver-brilho"></span>
+                    </button>
+                  )}
                 </div>
-                <button className='button sono-btn' onClick={dormir}>Dormir</button>
-              </div>
-
-              <div className='stat-block'>
-                <div className='stat sede'>
-                  <div className='imagens'>
-                    <img src="cafe.png" alt="Sede" />
-                  </div>
-                  <div className='stat-value'>Sede: {sede}</div>
-                </div>
-                <button className='button sede-btn' onClick={beber}>Beber</button>
-              </div>
+              )}
             </div>
-
-            <div className='stats-row'>
-              <div className='stat-block'>
-                <div className='stat banho'>
-                  <div className='imagens'>
-                    <img src="banho.png" alt="Banho" />
-                  </div>
-                  <div className='stat-value'>Banho: {banho}</div>
-                </div>
-                <button className='button banho-btn' onClick={tomarBanho}>Banho</button>
-              </div>
-
-              <div className='stat-block'>
-                <div className='stat codigo'>
-                  <div className='imagens'>
-                    <img src="codigo.png" alt="Código" />
-                  </div>
-                  <div className='stat-value'>Código: {codigo}</div>
-                </div>
-                <button className='button codigo-btn' onClick={programar}>Programar</button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className='morte'>
-            <img className='img-morte' src="morte.png" alt="Dev morto" />
-            <p>Seu dev morreu...</p>
-          </div>
-        )}
+          </>
+       
       </div>
     </div>
   )
