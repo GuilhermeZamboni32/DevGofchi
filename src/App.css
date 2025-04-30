@@ -1,109 +1,142 @@
 :root {
-  --cor1: #ff4444;  /* vida */
-  --cor2: #4CAF50;  /* fome */
-  --cor3: #37cadd;  /* sono */
-  --cor4: #ebcb14;  /* sede */
-  --cor5: #aa66cc;  /* banho */
-  --cor6: #5b4dd8;  /* codigo */
-  --cor7: #ff8c00;  /* exercicio */
-  --cor8: #1a1a1a;  /* background */
-  --cor9: #2d2d2d;  /* elementos de fundo */
-  --cor10: #ffffff; /* branco */
-  --cor11: #000000; /* preto */
+  --vermelho: #ff4444;  /* vida */
+  --verde: #4CAF50;  /* fome */
+  --azul: #37cadd;  /* sono */
+  --amarelo: #ebcb14;  /* sede */
+  --rosa: #aa66cc;  /* banho */
+  --roxo: #5b4dd8;  /* codigo */
+  --laranja: #ff8c00;  /* exercicio */
+  --branco: #ffffff; /* branco */
+  --cinza: #2d2d2d;  /* elementos de fundo */
+  --cinza-escuro: #1a1a1a;  /* background */
+  --preto: #000000; /* preto */
 }
 
 .conteiner {
-  background-color: var(--cor8);
+  background-color: var(--cinza-escuro);
   min-height: 100vh;
   width: 100%;
-  padding: 20px;
+  padding: 2rem;
   display: flex;
   justify-content: center;
-  font-family: Arial, sans-serif;
+  align-items: center;
 }
 
 .corpo {
   max-width: 800px;
   width: 100%;
+  background-color: var(--cinza);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .topo {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
-.topo .imagem-dev {
-  background-color: var(--cor9);
-  padding: 20px;
-  border-radius: 15px;
+.imagem-dev {
+  background-color: var(--cinza-escuro);
+  padding: 1.5rem;
+  border-radius: 20px;
   width: 200px;
   height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px var(--cor10); /* Brilho padrão branco */
+  box-shadow: 0 0 20px var(--branco);
 }
 
-.topo img {
+.imagem-dev img {
   width: 150px;
   height: 150px;
   object-fit: contain;
   transition: all 0.3s ease;
 }
 
-.stats-container {
+.info-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.5rem;
 }
 
-/* Estilo especial para o bloco de vida */
-.vida-block {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.vida-block .stat {
-  height: 100px;
-}
-
-.vida-block .stat-value {
-  font-size: 1.5rem;
-}
-
-.stats-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.stat-block {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.stat {
-  background-color: #2d2d2d;
-  padding: 15px;
+.corpo-vida {
+  background-color: var(--vermelho);
+  padding: 1rem;
   border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 130px;
+}
+
+.corpo-fome {
+  background-color: var(--verde);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.corpo-sede {
+  background-color: var(--azul);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.corpo-sono {
+  background-color: var(--amarelo);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.corpo-banho {
+  background-color: var(--rosa);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.corpo-codigo {
+  background-color: var(--roxo);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.corpo-exercicio {
+  background-color: var(--laranja);
+  padding: 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.info-vida, .info-fome, .info-sede, .info-sono, 
+.info-banho, .info-codigo, .info-exercicio {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1rem;
+  color: var(--branco);
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .imagens {
-  background-color: #2d434b;
-  padding: 10px;
-  border-radius: 10px;
+  background-color: var(--cinza);
+  padding: 0.8rem;
+  border-radius: 12px;
   width: 50px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.imagens:hover {
+  transform: scale(1.1);
 }
 
 .imagens img {
@@ -112,87 +145,153 @@
   object-fit: contain;
 }
 
-.stat-value {
-  flex: 1;
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
+.grupo-fome-sede {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* Novo container para os botões */
+.grupo-banho-sono {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grupo-codigo-exercicio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .buttons-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 1rem;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 2rem;
 }
 
-.button {
-  background-color: #4CAF50;
-  color: white;
+.button-vida, .button-fome, .button-sono, .button-sede, 
+.button-banho, .button-codigo, .button-exercicio {
+  color: var(--branco);
   border: none;
-  padding: 12px 24px;
+  padding: 1rem 2rem;
   border-radius: 12px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
   font-weight: bold;
   text-transform: uppercase;
-  min-width: 120px;
+  min-width: 140px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Cores específicas para cada status */
-.vida, .vida-btn { background-color: var(--cor1); }
-.fome, .fome-btn { background-color: var(--cor2); }
-.sono, .sono-btn { background-color: var(--cor3); }
-.sede, .sede-btn { background-color: var(--cor4); }
-.banho, .banho-btn { background-color: var(--cor5); }
-.codigo, .codigo-btn { background-color: var(--cor6); }
-.exercicio, .exercicio-btn { background-color: var(--cor7); }
+.button-vida:hover, .button-fome:hover, .button-sono:hover, 
+.button-sede:hover, .button-banho:hover, .button-codigo:hover, 
+.button-exercicio:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
 
-/* Container do botão de reviver */
+.button-vida { 
+  background-color: var(--vermelho);
+  box-shadow: 0 4px 6px rgba(255, 68, 68, 0.3);
+}
+
+.button-fome { 
+  background-color: var(--verde);
+  box-shadow: 0 4px 6px rgba(76, 175, 80, 0.3);
+}
+
+.button-sono { 
+  background-color: var(--azul);
+  box-shadow: 0 4px 6px rgba(55, 202, 221, 0.3);
+}
+
+.button-sede { 
+  background-color: var(--amarelo);
+  box-shadow: 0 4px 6px rgba(235, 203, 20, 0.3);
+}
+
+.button-banho { 
+  background-color: var(--rosa);
+  box-shadow: 0 4px 6px rgba(170, 102, 204, 0.3);
+}
+
+.button-codigo { 
+  background-color: var(--roxo);
+  box-shadow: 0 4px 6px rgba(91, 77, 216, 0.3);
+}
+
+.button-exercicio { 
+  background-color: var(--laranja);
+  box-shadow: 0 4px 6px rgba(255, 140, 0, 0.3);
+}
+
 .reviver-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-/* Mensagem de causa da morte */
 .causa-morte {
-  color: var(--cor1);
+  color: var(--vermelho);
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  text-shadow: 0 0 10px var(--cor1);
+  text-shadow: 0 0 10px var(--vermelho);
   animation: fadeIn 1s ease-in;
 }
 
-/* Botão de reviver */
-.reviver-btn {
-  position: relative;
-  background-color: var(--cor10);
-  color: var(--cor11);
+.button-reviver{
+  background-color: var(--branco);
+  color: var(--preto);
   font-size: 1.2rem;
-  padding: 20px 40px;
+  padding: 1.2rem 2.4rem;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   border-radius: 15px;
-  overflow: hidden;
+  border: none;
+  cursor: pointer;
   transition: all 0.3s ease;
-  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.reviver-btn:hover {
+.button-reviver:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 30px var(--cor3);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
+.sonolento {
+  box-shadow: 0 0 30px var(--azul);
+  animation: pulse 2s infinite;
+}
 
-/* Animações */
-@keyframes aparecer {
+.sujo {
+  box-shadow: 0 0 30px var(--rosa);
+  animation: pulse 2s infinite;
+}
+
+.sonolento.sujo {
+  box-shadow: 0 0 20px var(--azul), 0 0 20px var(--rosa);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 20px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 30px currentColor;
+  }
+  100% {
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -203,160 +302,34 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@media (max-width: 768px) {
+  .conteiner {
+    padding: 1rem;
   }
-  to {
-    opacity: 1;
+
+  .corpo {
+    padding: 1.5rem;
   }
-}
 
-@keyframes brilho {
-  0% {
-    left: -100%;
+  .imagem-dev {
+    width: 150px;
+    height: 150px;
   }
-  50% {
-    left: 100%;
+
+  .imagem-dev img {
+    width: 120px;
+    height: 120px;
   }
-  100% {
-    left: 100%;
-  }
-}
 
-.button:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-}
-
-.morte {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  color: white;
-}
-
-.img-morte {
-  width: 200px;
-  height: 200px;
-  object-fit: contain;
-}
-
-
-@media (max-width: 600px) {
-  .stats-row {
+  .buttons-container {
     flex-direction: column;
+    align-items: center;
   }
 
-  .stat {
-    padding: 10px;
+  .button-vida, .button-fome, .button-sono, .button-sede, 
+  .button-banho, .button-codigo, .button-exercicio {
+    width: 100%;
+    max-width: 300px;
   }
-
-  .imagens {
-    width: 40px;
-    height: 40px;
-  }
-
-  .imagens img {
-    width: 25px;
-    height: 25px;
-  }
-
-  .stat-value {
-    font-size: 1rem;
-  }
-
-  .button {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-}
-
-/* Efeitos para dev sonolento */
-.sonolento {
-  box-shadow: 0 0 20px var(--cor3);
-}
-
-.sonolento img {
-  opacity: 0.8;
-  filter: brightness(0.9);
-}
-
-/* Efeitos para dev sujo */
-.sujo {
-  box-shadow: 0 0 20px var(--cor5);
-}
-
-.sujo img {
-  filter: sepia(0.3);
-}
-
-/* Quando está sujo e com sono */
-.sonolento.sujo {
-  box-shadow: 0 0 15px var(--cor3), 0 0 15px var(--cor5);
-}
-
-.sonolento.sujo img {
-  opacity: 0.8;
-  filter: brightness(0.9) sepia(0.3);
-}
-
-/* Quando está morto */
-.topo img[src="morte.png"] {
-  filter: brightness(0.8);
-}
-
-.topo img[src="morte.png"] + .topo {
-  box-shadow: 0 0 25px var(--cor1); /* Brilho vermelho mais intenso para morte */
-}
-
-.imagem-dev {
-  background-color: var(--cor9);
-  padding: 20px;
-  border-radius: 15px;
-  width: 200px;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px var(--cor10); /* Brilho padrão branco */
-}
-
-.imagem-dev img {
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
-  transition: all 0.3s ease;
-}
-
-/* Efeitos para dev sonolento */
-.sonolento {
-  box-shadow: 0 0 20px var(--cor3);
-}
-
-.sonolento img {
-  opacity: 0.8;
-  filter: brightness(0.9);
-}
-
-/* Efeitos para dev sujo */
-.sujo {
-  box-shadow: 0 0 20px var(--cor5);
-}
-
-.sujo img {
-  filter: sepia(0.3);
-}
-
-/* Quando está morto */
-.imagem-dev img[src="morte.png"] {
-  filter: brightness(0.7);
-}
-
-.imagem-dev:has(img[src="morte.png"]) {
-  box-shadow: 0 0 25px var(--cor1); /* Brilho vermelho mais intenso para morte */
 }
 

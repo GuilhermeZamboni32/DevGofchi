@@ -11,8 +11,8 @@ function App() {
   const [codigo, setCodigo] = useState(100)
   const [exercicio, setExercicio] = useState(100)
   const [causaMorte, setCausaMorte] = useState('')
-  const [imagemDev, setImagemDev] = useState('dev.png')
-  const [mostrarReviver, setMostrarReviver] = useState(false)
+  const [imagemDev, setImagemDev] = useState('dev-normal.png')
+  const [Reviver, setReviver] = useState(false)
 
   // Efeito para diminuir vida quando fome ou sede estão baixas
   useEffect(() => {
@@ -47,7 +47,7 @@ function App() {
     return () => clearInterval(intervaloInfarto);
   }, [vivo, exercicio]);
 
-  // Efeito para mudar a imagem baseado no sono , banho e vida 
+  // Efeito para mudar a imagem baseado no sono , banho , vida e exercicio
   useEffect(() => {
     if (!vivo) return;
 
@@ -55,23 +55,33 @@ function App() {
       setImagemDev('insonia.png');
     } else if (banho <= 30) {
       setImagemDev('sujo.png');
-    }else if (vida <= 0) {
-        setImagemDev('morte.png');
+    } else if (vida <= 0) {
+      setImagemDev('morte.png');
+    } else if (exercicio <= 40) {
+      setImagemDev('gordo.png');
+    } else if (codigo >= 70) {
+      setImagemDev('dev-feliz.png');
+    } else if (codigo > 30 && codigo <= 69) {
+      setImagemDev('dev-normal.png');
+    } else if (codigo > 5 && codigo <= 29) {
+      setImagemDev('dev-bravo.png');
+    } else if (codigo <= 5) {
+      setImagemDev('dev-muito-bravo.png');
     } else {
-      setImagemDev('dev.png');
+      setImagemDev('dev-normal.png');
     }
   }, [sono, banho, vivo]);
 
   // Efeito para controlar a exibição do botão de reviver
   useEffect(() => {
-    if (!vivo && !mostrarReviver) {
+    if (!vivo && !Reviver) {
       // Espera 2 segundos antes de mostrar o botão de reviver
       const timer = setTimeout(() => {
-        setMostrarReviver(true);
+        setReviver(true);
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [vivo, mostrarReviver]);
+  }, [vivo, Reviver]);
 
   // Intervalo vida
   //useEffect(() => {
@@ -227,72 +237,72 @@ function App() {
         
         
           <>
-            <div className='stats-container'>
-              <div className='vida-block'>
-                <div className='stat vida'>
+            <div className='info-container'>
+              <div className='corpo-vida'>
+                <div className='info-vida'>
                   <div className='imagens'>
                     <img src="vida.png" alt="Vida" />
                   </div>
-                  <div className='stat-value'>Vida: {vida}</div>
+                  <div className='info-vida'>Vida: {vida}</div>
                 </div>
               </div>
 
-              <div className='stats-row'>
-                <div className='stat-block'>
-                  <div className='stat fome'>
+              <div className='grupo-fome-sede'>
+                <div className='corpo-fome'>
+                  <div className='fome'>
                     <div className='imagens'>
                       <img src="comida.png" alt="Fome" />
                     </div>
-                    <div className='stat-value'>Fome: {fome}</div>
+                    <div className='info-fome'>Fome: {fome}</div>
                   </div>
                 </div>
 
-                <div className='stat-block'>
-                  <div className='stat sede'>
+                <div className='corpo-sede'>
+                  <div className='sede'>
                     <div className='imagens'>
                       <img src="cafe.png" alt="Sede" />
                     </div>
-                    <div className='stat-value'>Sede: {sede}</div>
+                    <div className='info-sede'>Sede: {sede}</div>
                   </div>
                 </div>
               </div>
 
-              <div className='stats-row'>
-                <div className='stat-block'>
-                  <div className='stat sono'>
+              <div className='grupo-banho-sono'>
+                <div className='corpo-sono'>
+                  <div className='sono'>
                     <div className='imagens'>
                       <img src="dormir.png" alt="Sono" />
                     </div>
-                    <div className='stat-value'>Sono: {sono}</div>
+                    <div className='info-sono'>Sono: {sono}</div>
                   </div>
                 </div>
 
-                <div className='stat-block'>
-                  <div className='stat banho'>
+                <div className='corpo-banho'>
+                  <div className='banho'>
                     <div className='imagens'>
                       <img src="banho.png" alt="Banho" />
                     </div>
-                    <div className='stat-value'>Banho: {banho}</div>
+                    <div className='info-banho'>Banho: {banho}</div>
                   </div>
                 </div>
               </div>
 
-              <div className='stats-row'>
-                <div className='stat-block'>
-                  <div className='stat codigo'>
+              <div className='grupo-codigo-exercicio'>
+                <div className='corpo-codigo'>
+                  <div className='codigo'>
                     <div className='imagens'>
                       <img src="codigo.png" alt="Código" />
                     </div>
-                    <div className='stat-value'>Código: {codigo}</div>
+                    <div className='info-codigo'>Código: {codigo}</div>
                   </div>
                 </div>
 
-                <div className='stat-block'>
-                  <div className='stat exercicio'>
+                <div className='corpo-exercicio'>
+                  <div className='exercicio'>
                     <div className='imagens'>
                       <img src="exercicio.png" alt="Exercício" />
                     </div>
-                    <div className='stat-value'>Exercício: {exercicio}</div>
+                    <div className='info-exercicio'>Exercício: {exercicio}</div>
                   </div>
                 </div>
               </div>
@@ -301,21 +311,20 @@ function App() {
             <div className='buttons-container'>
               {vivo ? (
                 <>
-                  <button className='button vida-btn' onClick={curar}>Curar</button>
-                  <button className='button fome-btn' onClick={comer}>Comer</button>
-                  <button className='button sono-btn' onClick={dormir}>Dormir</button>
-                  <button className='button sede-btn' onClick={beber}>Beber</button>
-                  <button className='button banho-btn' onClick={tomarBanho}>Banho</button>
-                  <button className='button codigo-btn' onClick={programar}>Programar</button>
-                  <button className='button exercicio-btn' onClick={fazerExercicio}>Exercitar</button>
+                  {/*<button className='button-vida' onClick={curar}>Curar</button>*/}
+                  <button className='button-fome' onClick={comer}>Comer</button>
+                  <button className='button-sono' onClick={dormir}>Dormir</button>
+                  <button className='button-sede' onClick={beber}>Beber</button>
+                  <button className='button-banho' onClick={tomarBanho}>Banho</button>
+                  <button className='button-codigo' onClick={programar}>Programar</button>
+                  <button className='button-exercicio' onClick={fazerExercicio}>Exercitar</button>
                 </>
               ) : (
                 <div className="reviver-container">
                   {causaMorte && <p className="causa-morte">{causaMorte}</p>}
-                  {mostrarReviver && (
-                    <button className='button reviver-btn' onClick={reviver}>
-                      Reviver Dev
-                      <span className="reviver-brilho"></span>
+                  {Reviver && (
+                    <button className='button-reviver' onClick={reviver}>
+                      Reviver seu Dev
                     </button>
                   )}
                 </div>
