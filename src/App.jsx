@@ -1,3 +1,17 @@
+/**imagens paga usar
+ * dev-normal.png --imagem inicial ou codigo entre 79 a 50
+ * dev-feliz.png --codigo acima de 80
+ * dev-bravo.png --codigo entre de 49 a 20
+ * dev-muito-bravo.png --codigo entre 19 a 0
+ * dev-sujo.png -- banho estiver abaixo de 45
+ * dev-sonolento.png -- sono abaixo de 45
+ * dev-gordo.png -- exercicio abaixo de 45
+ * dev-gordo-sonolento.png -- exercicio e sono abaixo de 45
+ * dev-morto.png -- vida igual a 0 ou morte por ataque cardiaco
+ * 
+ */
+
+
 import { useEffect, useState } from 'react'
 import './App.css'
 
@@ -8,11 +22,11 @@ function App() {
   const [sono, setSono] = useState(100)
   const [sede, setSede] = useState(100)
   const [banho, setBanho] = useState(100)
-  const [codigo, setCodigo] = useState()
-  const [exercicio, setExercicio] = useState(30)
+  const [codigo, setCodigo] = useState(100)
+  const [exercicio, setExercicio] = useState(100)
   const [causaMorte, setCausaMorte] = useState('')
   const [imagemDev, setImagemDev] = useState('dev-normal.png')
-  const [Reviver, setReviver] = useState(false)
+  const [mostrarReviver, setMostrarReviver] = useState(false)
 
   // Efeito para diminuir vida quando fome ou sede estão baixas
   useEffect(() => {
@@ -47,18 +61,21 @@ function App() {
     return () => clearInterval(intervaloInfarto);
   }, [vivo, exercicio]);
 
-  // Efeito para mudar a imagem baseado no sono , banho , vida e exercicio
+  // Efeito para mudar a imagem do dev
   useEffect(() => {
-    if (!vivo) return;
+    if (!vivo) {
+      setImagemDev('dev-morto.png');
+      return;
+    }
 
-    if (sono <= 30) {
-      setImagemDev('insonia.png');
+    if (sono <= 30 && banho <= 30) {
+      setImagemDev('dev-gordo-sonolento.png');
+    } else if (sono <= 30) {
+      setImagemDev('dev-sonolento.png');
     } else if (banho <= 30) {
-      setImagemDev('sujo.png');
-    } else if (vida <= 0) {
-      setImagemDev('morte.png');
+      setImagemDev('dev-sujo.png');
     } else if (exercicio <= 40) {
-      setImagemDev('gordo.png');
+      setImagemDev('dev-gordo.png');
     } else if (codigo >= 70) {
       setImagemDev('dev-feliz.png');
     } else if (codigo > 30 && codigo <= 69) {
@@ -70,18 +87,18 @@ function App() {
     } else {
       setImagemDev('dev-normal.png');
     }
-  }, [sono, banho, vivo]);
+  }, [sono, banho, vivo, exercicio, codigo]);
 
   // Efeito para controlar a exibição do botão de reviver
   useEffect(() => {
-    if (!vivo && !Reviver) {
+    if (!vivo && !mostrarReviver) {
       // Espera 2 segundos antes de mostrar o botão de reviver
       const timer = setTimeout(() => {
-        setReviver(true);
+        setMostrarReviver(true);
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [vivo, Reviver]);
+  }, [vivo, mostrarReviver]);
 
   // Intervalo vida
   //useEffect(() => {
@@ -222,7 +239,7 @@ function App() {
     setCodigo(100);
     setExercicio(100);
     setCausaMorte('');
-    setImagemDev('dev.png');
+    setImagemDev('dev-normal.png');
     setMostrarReviver(false);
   }
 
@@ -230,108 +247,85 @@ function App() {
     <div className='conteiner'>
       <div className='corpo'>
         <div className='topo'>
-          <div className={`imagem-dev ${sono <= 30 ? 'sonolento' : ''} ${banho <= 30 ? 'sujo' : ''}`}>
+          <div className='imagem-dev'>
             <img src={imagemDev} alt="Dev" />
           </div>
         </div>
         
-        
+        {vivo ? (
           <>
             <div className='info-container'>
-              <div className='corpo-vida'>
-                <div className='info-vida'>
-                  <div className='imagens'>
-                    <img src="vida.png" alt="Vida" />
-                  </div>
-                  <div className='info-vida'>Vida: {vida}</div>
+              <div className='stat-card vida'>
+                <div className='stat-icon'>
+                  <img src="vida.png" alt="Vida" />
                 </div>
+                <div>Vida: {vida}</div>
               </div>
 
-              <div className='grupo-fome-sede'>
-                <div className='corpo-fome'>
-                  <div className='fome'>
-                    <div className='imagens'>
-                      <img src="comida.png" alt="Fome" />
-                    </div>
-                    <div className='info-fome'>Fome: {fome}</div>
+              <div className='stats-grid'>
+                <div className='stat-card fome'>
+                  <div className='stat-icon'>
+                    <img src="comida.png" alt="Fome" />
                   </div>
+                  <div>Fome: {fome}</div>
                 </div>
 
-                <div className='corpo-sede'>
-                  <div className='sede'>
-                    <div className='imagens'>
-                      <img src="cafe.png" alt="Sede" />
-                    </div>
-                    <div className='info-sede'>Sede: {sede}</div>
+                <div className='stat-card sede'>
+                  <div className='stat-icon'>
+                    <img src="cafe.png" alt="Sede" />
                   </div>
-                </div>
-              </div>
-
-              <div className='grupo-banho-sono'>
-                <div className='corpo-sono'>
-                  <div className='sono'>
-                    <div className='imagens'>
-                      <img src="dormir.png" alt="Sono" />
-                    </div>
-                    <div className='info-sono'>Sono: {sono}</div>
-                  </div>
+                  <div>Sede: {sede}</div>
                 </div>
 
-                <div className='corpo-banho'>
-                  <div className='banho'>
-                    <div className='imagens'>
-                      <img src="banho.png" alt="Banho" />
-                    </div>
-                    <div className='info-banho'>Banho: {banho}</div>
+                <div className='stat-card sono'>
+                  <div className='stat-icon'>
+                    <img src="dormir.png" alt="Sono" />
                   </div>
-                </div>
-              </div>
-
-              <div className='grupo-codigo-exercicio'>
-                <div className='corpo-codigo'>
-                  <div className='codigo'>
-                    <div className='imagens'>
-                      <img src="codigo.png" alt="Código" />
-                    </div>
-                    <div className='info-codigo'>Código: {codigo}</div>
-                  </div>
+                  <div>Sono: {sono}</div>
                 </div>
 
-                <div className='corpo-exercicio'>
-                  <div className='exercicio'>
-                    <div className='imagens'>
-                      <img src="exercicio.png" alt="Exercício" />
-                    </div>
-                    <div className='info-exercicio'>Exercício: {exercicio}</div>
+                <div className='stat-card banho'>
+                  <div className='stat-icon'>
+                    <img src="banho.png" alt="Banho" />
                   </div>
+                  <div>Banho: {banho}</div>
+                </div>
+
+                <div className='stat-card codigo'>
+                  <div className='stat-icon'>
+                    <img src="codigo.png" alt="Código" />
+                  </div>
+                  <div>Código: {codigo}</div>
+                </div>
+
+                <div className='stat-card exercicio'>
+                  <div className='stat-icon'>
+                    <img src="exercicio.png" alt="Exercício" />
+                  </div>
+                  <div>Exercício: {exercicio}</div>
                 </div>
               </div>
             </div>
 
             <div className='buttons-container'>
-              {vivo ? (
-                <>
-                  {/*<button className='button-vida' onClick={curar}>Curar</button>*/}
-                  <button className='button-fome' onClick={comer}>Comer</button>
-                  <button className='button-sono' onClick={dormir}>Dormir</button>
-                  <button className='button-sede' onClick={beber}>Beber</button>
-                  <button className='button-banho' onClick={tomarBanho}>Banho</button>
-                  <button className='button-codigo' onClick={programar}>Programar</button>
-                  <button className='button-exercicio' onClick={fazerExercicio}>Exercitar</button>
-                </>
-              ) : (
-                <div className="reviver-container">
-                  {causaMorte && <p className="causa-morte">{causaMorte}</p>}
-                  {Reviver && (
-                    <button className='button-reviver' onClick={reviver}>
-                      Reviver seu Dev
-                    </button>
-                  )}
-                </div>
-              )}
+              <button className='button-fome' onClick={comer}>Comer</button>
+              <button className='button-sono' onClick={dormir}>Dormir</button>
+              <button className='button-sede' onClick={beber}>Beber</button>
+              <button className='button-banho' onClick={tomarBanho}>Banho</button>
+              <button className='button-codigo' onClick={programar}>Programar</button>
+              <button className='button-exercicio' onClick={fazerExercicio}>Exercitar</button>
             </div>
           </>
-       
+        ) : (
+          <div className='morte'>
+            <p>{causaMorte || 'Seu dev morreu...'}</p>
+            {mostrarReviver && (
+              <button className='button-reviver' onClick={reviver}>
+                Reviver
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
