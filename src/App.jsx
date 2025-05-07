@@ -28,7 +28,9 @@ function App() {
   const [imagemDev, setImagemDev] = useState('dev-normal.png')
   const [mostrarReviver, setMostrarReviver] = useState(false)
 
-  // Efeito para diminuir vida quando fome ou sede estão baixas
+
+
+  // Efeito para diminuir vida quando fome ou sede estão baixas  #######################################################
   useEffect(() => {
     const intervaloPerdaVida = setInterval(() => {
       if (vivo && (fome < 40 || sede < 40)) {
@@ -45,29 +47,43 @@ function App() {
     return () => clearInterval(intervaloPerdaVida);
   }, [vivo, fome, sede]);
 
-  // Efeito para verificar infarto quando exercício está baixo
+
+
+  // Efeito para aumentar a vida se fome e sede estiverem altas   #######################################################
+useEffect(() => {
+  const intervaloAumentoVida = setInterval(() => {
+    if (vivo && vida < 100 && fome > 70 && sede > 70) {
+      setVida((vidaAtual) => (vidaAtual + 1 > 100 ? 100 : vidaAtual + 1));
+    }
+  }, 1000);
+  return () => clearInterval(intervaloAumentoVida);
+}, [vivo, vida, fome, sede]);
+
+
+
+  // Efeito para verificar infarto quando exercício está baixo   #######################################################
   useEffect(() => {
     const intervaloInfarto = setInterval(() => {
       if (vivo && exercicio <= 30) {
-        // Gera um número aleatório entre 1 e 10
         const chance = Math.floor(Math.random() * 10) + 1;
-        if (chance === 1) { // 1 em 10 de chance
+        if (chance === 1) { 
           setVivo(false);
           setVida(0);
           setCausaMorte('Seu dev teve um infarto por falta de exercício!');
         }
       }
-    }, 5000); // Verifica a cada 5 segundos
+    }, 5000); 
     return () => clearInterval(intervaloInfarto);
   }, [vivo, exercicio]);
 
-  // Efeito para mudar a imagem do dev
+
+
+  // Efeito para mudar a imagem do dev   #######################################################
   useEffect(() => {
     if (!vivo) {
       setImagemDev('dev-morto.png');
       return;
     }
-
     if (sono <= 30 && banho <= 30) {
       setImagemDev('dev-gordo-sonolento.png');
     } else if (sono <= 30) {
@@ -89,10 +105,11 @@ function App() {
     }
   }, [sono, banho, vivo, exercicio, codigo]);
 
-  // Efeito para controlar a exibição do botão de reviver
+
+
+  // Efeito para controlar a exibição do botão de reviver   #######################################################
   useEffect(() => {
     if (!vivo && !mostrarReviver) {
-      // Espera 2 segundos antes de mostrar o botão de reviver
       const timer = setTimeout(() => {
         setMostrarReviver(true);
       }, 2000);
@@ -100,21 +117,24 @@ function App() {
     }
   }, [vivo, mostrarReviver]);
 
-  // Intervalo vida
-  //useEffect(() => {
-  // const intervaloVida = setInterval(() => {
-  //   if(vida <= 0){
-  //     setVivo(false)
-  //     clearInterval(intervaloVida)
-  //     return 0
-  //   }
-  //   setVida((vidaAtual) => vidaAtual-1)
-  // }, 5000);
-  // return () => clearInterval(intervaloVida)
-  //},
 
 
-  // Intervalo fome
+  /* Intervalo vida    ##############################################################################################################
+  useEffect(() => {
+   const intervaloVida = setInterval(() => {
+     if(vida <= 0){
+       setVivo(false)
+       clearInterval(intervaloVida)
+       return 0
+    }
+    setVida((vidaAtual) => vidaAtual-1)
+   }, 5000);
+   return () => clearInterval(intervaloVida)
+  },*/
+
+
+
+  // Intervalo fome   #####################################################################################################
   useEffect(() => {
     const intervaloFome = setInterval(() => {
       if(vivo){
@@ -126,7 +146,7 @@ function App() {
 
 
 
-  // Intervalo sono
+  // Intervalo sono  #########################################################################################################
   useEffect(() => {
     const intervaloSono = setInterval(() => {
       if(vivo){
@@ -138,7 +158,7 @@ function App() {
 
 
 
-  // Intervalo sede
+  // Intervalo sede   #########################################################################################################
   useEffect(() => {
     const intervaloSede = setInterval(() => {
       if(vivo){
@@ -150,7 +170,7 @@ function App() {
 
 
 
-  // Intervalo banho
+  // Intervalo banho   ######################################################################################################
   useEffect(() => {
     const intervaloBanho = setInterval(() => {
       if(vivo){
@@ -162,7 +182,7 @@ function App() {
 
 
 
-  // Intervalo codigo
+  // Intervalo codigo    ######################################################################################################
   useEffect(() => {
     const intervaloCodigo = setInterval(() => {
       if(vivo){
@@ -174,7 +194,7 @@ function App() {
 
 
 
-  // Intervalo exercicio
+  // Intervalo exercicio    ##################################################################################################
   useEffect(() => {
     const intervaloExercicio = setInterval(() => {
       if(vivo){
@@ -228,7 +248,7 @@ function App() {
     }
   }
 
-  // Função para reviver o dev
+  // Função para reviver o dev    #######################################################
   function reviver() {
     setVivo(true);
     setVida(100);
