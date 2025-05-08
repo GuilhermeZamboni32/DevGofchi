@@ -9,7 +9,7 @@ function App() {
   const [sede, setSede] = useState(100)
   const [banho, setBanho] = useState(100)
   const [codigo, setCodigo] = useState()
-  const [exercicio, setExercicio] = useState(30)
+  const [exercicio, setExercicio] = useState(100)
   const [causaMorte, setCausaMorte] = useState('')
   const [imagemDev, setImagemDev] = useState('dev-normal.png')
   const [Reviver, setReviver] = useState(false)
