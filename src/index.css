@@ -1,9 +1,28 @@
-*{
+:root {
+  --vermelho: #ff4444;  /* vida */
+  --verde: #4CAF50;  /* fome */
+  --azul: #37cadd;  /* sono */
+  --amarelo: #ebcb14;  /* sede */
+  --rosa: #aa66cc;  /* banho */
+  --roxo: #5b4dd8;  /* codigo */
+  --laranja: #ff8c00;  /* exercicio */
+  --branco: #ffffff; /* branco */
+  --cinza: #2d2d2d;  /* elementos de fundo */
+  --cinza-escuro: #1a1a1a;  /* background */
+  --preto: #000000; /* preto */
+}
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
-#root, body, html{
+
+body {
+  background-color: var(--cinza-escuro);
+}
+
+#root, body, html {
   height: 100vh;
-  
 }
